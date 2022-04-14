@@ -6,4 +6,4 @@ RUN npm install -g wrangler@beta
 VOLUME /app
 WORKDIR /app
 
-CMD npm install && wrangler pages dev ./dist -k BeerUsers --live-reload
+CMD npm install && wrangler pages dev ./public -k BeerUsers --live-reload --binding AUD="DEV"

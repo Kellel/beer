@@ -1,15 +1,21 @@
 
 export async function onRequest(context) {
     const { env,  params, request, data } = context;
-    const userID: string = data.sub
-    const body = JSON.parse(request.Body)
+    const userID: string = data.user.sub
+    console.log(data)
+
+    const body = await request.json()
+    console.log(body)
 
     var newUser :UserProfile = {
-        Name: body.Name,
-        Beers: 0
+        name: body.name,
+        beers: 0
     };
 
-    await env.BeerUsers.put(userID, newUser)
+    var userString = JSON.stringify(newUser);
 
-    return new Response(JSON.stringify(newUser));
+    console.log(userID, newUser);
+    await env.BeerUsers.put(userID, userString)
+
+    return new Response(userString);
 }

@@ -11,9 +11,14 @@ interface JWT {
 }
 
 const validateJWT = async (jwtAssertion: string | null, aud: string) => {
-    // If the JWT is valid, return the JWT payload
-    // Else, return false
-    // https://developers.cloudflare.com/cloudflare-one/identity/users/validating-json
+	// DEV just return dummy data
+	if (aud === "DEV"){
+		var dummy: JWT = {
+			email: "test@foo.com",
+			sub: "1234-abcd-1234-abcd"
+		}
+		return dummy
+	}
     var decoded: JWT = jwt_decode(jwtAssertion)
     if (decoded.aud[0] != aud) {
         return false
@@ -24,7 +29,7 @@ const validateJWT = async (jwtAssertion: string | null, aud: string) => {
 
   const cloudflareAccessMiddleware =
     async ({ request, env, next, data }) => {
-      const { aud } = (env.AUD);
+      const  aud = env.AUD;
   
       const jwtPayload = await validateJWT(
         request.headers.get("CF-Access-JWT-Assertion"),
@@ -35,7 +40,7 @@ const validateJWT = async (jwtAssertion: string | null, aud: string) => {
         return new Response("Access denied.", { status: 403 });
   
       // We could also use the data object to pass information between middlewares
-      data.user = jwtPayload.email;
+      data.user = jwtPayload;
   
       return await next();
     };

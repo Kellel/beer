@@ -1,4 +1,4 @@
 interface UserProfile {
-    Name: string;
-    Beers: number;
+    name: string;
+    beers: number;
 }
