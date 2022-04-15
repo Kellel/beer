@@ -11,15 +11,8 @@ interface JWT {
 }
 
 const validateJWT = async (jwtAssertion: string | null, aud: string) => {
-	// DEV just return dummy data
-	if (aud === "DEV"){
-		var dummy: JWT = {
-			email: "test@foo.com",
-			sub: "1234-abcd-1234-abca"
-		}
-		return dummy
-	}
     var decoded: JWT = jwt_decode(jwtAssertion)
+    console.log(decoded);
     if (decoded.aud[0] != aud) {
         return false
     }
