@@ -8,11 +8,12 @@ import * as jose from 'jose'
 
       const jwt = request.headers.get("CF-Access-JWT-Assertion");
 
-      return new Response("foo", { status: 403 });
 
       const JWKS = jose.createRemoteJWKSet(new URL(certUrl));
       const { payload, header } = await jose.jwtVerify(jwt, JWKS, { audience: aud });
       console.log(payload);
+
+      return new Response(JSON.stringify(payload), { status: 403 });
   
       if (!payload)
         return new Response("Access denied.", { status: 403 });
