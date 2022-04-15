@@ -1,12 +1,14 @@
 export async function onRequest(context) {
 	const { env, next, data } = context;
 	const userID = data.user.sub;
-	const userProfile:UserProfile = JSON.parse(await env.BeerUsers.get(userID));
+	const kvData = await env.BeerUsers.get(userID);
+	console.log("Data: " + kvData);
 
-	if (userProfile == null) {
+	if (kvData == null) {
 		return new Response('User not found', { status: 404 })
 	}
 
+	const userProfile:UserProfile = JSON.parse(kvData);
 	console.log(userProfile);
 
 	data.profile = userProfile;

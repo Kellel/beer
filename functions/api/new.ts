@@ -5,7 +5,7 @@ export async function onRequest(context) {
     console.log(data)
 
     const body = await request.json()
-    console.log(body)
+    console.log("New user: " + body.name)
 
     var newUser :UserProfile = {
         name: body.name,

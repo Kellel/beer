@@ -15,7 +15,7 @@ const validateJWT = async (jwtAssertion: string | null, aud: string) => {
 	if (aud === "DEV"){
 		var dummy: JWT = {
 			email: "test@foo.com",
-			sub: "1234-abcd-1234-abcd"
+			sub: "1234-abcd-1234-abca"
 		}
 		return dummy
 	}
