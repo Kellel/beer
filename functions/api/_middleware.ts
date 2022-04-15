@@ -13,8 +13,6 @@ import * as jose from 'jose'
       const { payload, header } = await jose.jwtVerify(jwt, JWKS, { audience: aud });
       console.log(payload);
 
-      return new Response(JSON.stringify(payload), { status: 403 });
-  
       if (!payload)
         return new Response("Access denied.", { status: 403 });
   
